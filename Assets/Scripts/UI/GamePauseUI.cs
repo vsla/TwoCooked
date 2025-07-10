@@ -5,20 +5,26 @@ using UnityEngine.UI;
 public class GamePauseUI : MonoBehaviour
 {
     [SerializeField] private Button resumeButton;
-
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button optionsButton;
 
 
     private void Awake()
     {
-        resumeButton.onClick.AddListener(() => {
+        resumeButton.onClick.AddListener(() =>
+        {
             GameManager.Instance.TogglePauseGame();
         });
         mainMenuButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePauseGame(); // Unpause the game if it was paused
             // Load the main menu scene
-            Loader.Load(Loader.Scene.MainMenu);    
+            Loader.Load(Loader.Scene.MainMenu);
+        });
+
+        optionsButton.onClick.AddListener(() =>
+        {
+            OptionsUI.Instance.Show();
         });
     }
 

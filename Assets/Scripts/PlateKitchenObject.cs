@@ -25,13 +25,11 @@ public class PlateKitchenObject : KitchenObject
         if (!validKitchenObjectSOList.Contains(kitchenObjectSO))
         {
             // Ingredient is not valid for this plate
-            Debug.Log("Ingredient is not valid for this plate.");
             return false;
         }
         if (kitchenObjectSOList.Contains(kitchenObjectSO))
         {
             // Ingredient already exists on the plate
-            Debug.Log("Ingredient already exists on the plate.");
             return false;
         }
         kitchenObjectSOList.Add(kitchenObjectSO);

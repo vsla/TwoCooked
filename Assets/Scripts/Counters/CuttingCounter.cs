@@ -75,7 +75,6 @@ public class CuttingCounter : BaseCounter, IHasProgress
             OnCut?.Invoke(this, EventArgs.Empty); // Notify that cutting has started
             // Notify any listeners that the cutting progress has changed
             
-            Debug.Log(OnAnyCuttingCounterProgressChanged.GetInvocationList().Length + " listeners for cutting progress changed");
             OnAnyCuttingCounterProgressChanged?.Invoke(this, EventArgs.Empty);
 
 
