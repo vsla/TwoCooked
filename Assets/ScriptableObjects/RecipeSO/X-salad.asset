@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f3e89d3a72f8840b3dd6d226c1d1a4, type: 3}
+  m_Name: X-salad
+  m_EditorClassIdentifier: 
+  kitchenObjectSOList:
+  - {fileID: 11400000, guid: eca538590ff2b2147883f99def1f6b62, type: 2}
+  - {fileID: 11400000, guid: 64f30620a3609e74dbe62a8764de0efc, type: 2}
+  - {fileID: 11400000, guid: 8dd6cbea44cfe524dab7a11f47b362f3, type: 2}
+  - {fileID: 11400000, guid: a30a62c7bd51ae84987fbdf7fcfee491, type: 2}
+  - {fileID: 11400000, guid: 10411ad13ac90044fa231e3fc30cf65f, type: 2}
+  recipeName: X-Salad
