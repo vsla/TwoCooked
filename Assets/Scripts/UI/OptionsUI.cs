@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class OptionsUI : MonoBehaviour
 {
+
     public static OptionsUI Instance { get; private set; }
     [SerializeField] private Slider soundEffectSlider;
     [SerializeField] private Slider musicSlider;
@@ -18,6 +19,10 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI interactAltText;
     [SerializeField] private TextMeshProUGUI pauseText;
 
+    [SerializeField] private TextMeshProUGUI gamePadInteractText;
+    [SerializeField] private TextMeshProUGUI gamePadInteractAltText;
+    [SerializeField] private TextMeshProUGUI gamePadPauseText;
+
     [SerializeField] private Button moveUpButton;
     [SerializeField] private Button moveDownButton;
     [SerializeField] private Button moveLeftButton;
@@ -25,6 +30,10 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Button interactButton;
     [SerializeField] private Button interactAltButton;
     [SerializeField] private Button pauseButton;
+
+    [SerializeField] private Button gamePadInteractButton;
+    [SerializeField] private Button gamePadInteractAltButton;
+    [SerializeField] private Button gamePadPauseButton;
 
     [SerializeField] private Transform pressToRebindKeyTransform;
 
@@ -54,6 +63,9 @@ public class OptionsUI : MonoBehaviour
         interactButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.Interact));
         interactAltButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.InteractAlternate));
         pauseButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.Pause));
+        gamePadInteractButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.GamepadInteract));
+        gamePadInteractAltButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.GamepadInteractAlternate));
+        gamePadPauseButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.GamepadPause));
     }
 
 
@@ -68,11 +80,11 @@ public class OptionsUI : MonoBehaviour
         soundEffectSlider.value = defaultSoundsVolume * 10; // Assuming slider value is from 0 to 10
         musicSlider.value = defaultMusicVolume * 10; // Assuming slider value is from
 
-        UpdateVisualBindings();
+        UpdateTextVisualBindings();
         HidePressToRebindKey();
     }
 
-    private void UpdateVisualBindings()
+    private void UpdateTextVisualBindings()
     {
         moveUpText.text = GameInput.Instance.GetBindingText(GameInput.Binding.MoveUp);
         moveDownText.text = GameInput.Instance.GetBindingText(GameInput.Binding.MoveDown);
@@ -81,6 +93,9 @@ public class OptionsUI : MonoBehaviour
         interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Interact);
         interactAltText.text = GameInput.Instance.GetBindingText(GameInput.Binding.InteractAlternate);
         pauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
+        gamePadInteractText.text = GameInput.Instance.GetBindingText(GameInput.Binding.GamepadInteract);
+        gamePadInteractAltText.text = GameInput.Instance.GetBindingText(GameInput.Binding.GamepadInteractAlternate);
+        gamePadPauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.GamepadPause);
     }
 
     private void GameManager_onGameUnpaused(object sender, EventArgs e)
@@ -114,7 +129,7 @@ public class OptionsUI : MonoBehaviour
         GameInput.Instance.RebindBinding(binding, () =>
         {
             HidePressToRebindKey();
-            UpdateVisualBindings();
+            UpdateTextVisualBindings();
         });
     }
 }

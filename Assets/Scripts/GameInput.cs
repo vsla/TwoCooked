@@ -19,7 +19,10 @@ public class GameInput : MonoBehaviour
         MoveRight,
         Interact,
         InteractAlternate,
-        Pause
+        Pause,
+        GamepadInteract, // Added for gamepad interaction
+        GamepadInteractAlternate, // Added for gamepad interaction  
+        GamepadPause // Added for gamepad interaction
     }
 
     private PlayerInputActions playerInputAcions;
@@ -96,7 +99,7 @@ public class GameInput : MonoBehaviour
             inputVector.x = +1;
         }
 
-        return inputVector;
+        return inputVector.normalized;
     }
 
     public string GetBindingText(Binding binding)
@@ -117,6 +120,12 @@ public class GameInput : MonoBehaviour
                 return playerInputAcions.Player.InteractAlternative.bindings[0].ToDisplayString();
             case Binding.Pause:
                 return playerInputAcions.Player.Pause.bindings[0].ToDisplayString();
+            case Binding.GamepadInteract:
+                return playerInputAcions.Player.Interact.bindings[1].ToDisplayString();
+            case Binding.GamepadInteractAlternate:
+                return playerInputAcions.Player.InteractAlternative.bindings[1].ToDisplayString();
+            case Binding.GamepadPause:
+                return playerInputAcions.Player.Pause.bindings[1].ToDisplayString();
             default:
                 return "";
         }
@@ -161,6 +170,18 @@ public class GameInput : MonoBehaviour
             case Binding.Pause:
                 inputAction = playerInputAcions.Player.Pause;
                 bindingIndex = 0; // Assuming Pause is the first binding
+                break;
+            case Binding.GamepadInteract:
+                inputAction = playerInputAcions.Player.Interact;
+                bindingIndex = 1; // Assuming GamepadInteract is the second binding
+                break;
+            case Binding.GamepadInteractAlternate:
+                inputAction = playerInputAcions.Player.InteractAlternative;
+                bindingIndex = 1; // Assuming GamepadInteractAlternate is the second binding
+                break;
+            case Binding.GamepadPause:
+                inputAction = playerInputAcions.Player.Pause;
+                bindingIndex = 1; // Assuming GamepadPause is the second binding
                 break;
         }
 

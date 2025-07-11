@@ -127,31 +127,31 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         float playerHeight = 2f;
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
-        // if (!canMove) {
-        //     // Cannot move towards moveDir
+        if (!canMove) {
+            // Cannot move towards moveDir
 
-        //     // Attempt only X movement
-        //     Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-        //     canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+            // Attempt only X movement
+            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
+            canMove = (moveDir.x < -.5f || moveDir.x > +0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
 
-        //     if (canMove) {
-        //         // Can move only on the X
-        //         moveDir = moveDirX;
-        //     } else {
-        //         // Cannot move only on the X
+            if (canMove) {
+                // Can move only on the X
+                moveDir = moveDirX;
+            } else {
+                // Cannot move only on the X
 
-        //         // Attempt only Z movement
-        //         Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-        //         canMove = moveDir.z != 0 &&!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
+                // Attempt only Z movement
+                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
+                canMove =(moveDir.z < -.5f || moveDir.z > +0.5f) &&!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
-        //         if (canMove) {
-        //             // Can move only on the Z
-        //             moveDir = moveDirZ;
-        //         } else {
-        //             // Cannot move in any direction
-        //         }
-        //     }
-        // }
+                if (canMove) {
+                    // Can move only on the Z
+                    moveDir = moveDirZ;
+                } else {
+                    // Cannot move in any direction
+                }
+            }
+        }
 
         if (canMove)
         {
