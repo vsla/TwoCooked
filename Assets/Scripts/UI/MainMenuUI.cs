@@ -12,6 +12,7 @@ public class MainMenuUI : MonoBehaviour
     {
         playButton.onClick.AddListener(OnPlayButtonClicked);
         quitButton.onClick.AddListener(OnQuitButtonClicked);
+        playButton.Select(); // Set focus on the play button when the main menu is shown
     }
 
     private void OnQuitButtonClicked()

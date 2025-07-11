@@ -24,7 +24,8 @@ public class GamePauseUI : MonoBehaviour
 
         optionsButton.onClick.AddListener(() =>
         {
-            OptionsUI.Instance.Show();
+            Hide(); // Hide the pause UI before showing options
+            OptionsUI.Instance.Show(Show); // Pass the Show method to OptionsUI
         });
     }
 
@@ -49,6 +50,8 @@ public class GamePauseUI : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
+
+        resumeButton.Select(); // Set focus on the resume button when the pause UI is shown
     }
 
     private void Hide()

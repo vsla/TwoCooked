@@ -38,6 +38,8 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Transform pressToRebindKeyTransform;
 
 
+    private Action onCloseButtonAction;
+
     private void Awake()
     {
         Instance = this;
@@ -54,6 +56,7 @@ public class OptionsUI : MonoBehaviour
         closeButton.onClick.AddListener(() =>
         {
             Hide();
+            onCloseButtonAction();
         });
 
         moveUpButton.onClick.AddListener(() => RebindingBinding(GameInput.Binding.MoveUp));
@@ -103,9 +106,11 @@ public class OptionsUI : MonoBehaviour
         Hide();
     }
 
-    public void Show()
+    public void Show(Action onCloseButtonAction)
     {
+        this.onCloseButtonAction = onCloseButtonAction;
         gameObject.SetActive(true);
+        closeButton.Select(); // Set focus on the close button when the options UI is shown
     }
 
     public void Hide()
