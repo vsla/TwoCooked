@@ -10,6 +10,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnPauseAction;
+    public event EventHandler OnBindingRebound;
 
     public enum Binding
     {
@@ -21,8 +22,8 @@ public class GameInput : MonoBehaviour
         InteractAlternate,
         Pause,
         GamepadInteract, // Added for gamepad interaction
-        GamepadInteractAlternate, // Added for gamepad interaction  
-        GamepadPause // Added for gamepad interaction
+        GamepadInteractAlternate, // Added for gamepad interaction
+        GamepadPause, // Added for gamepad interaction
     }
 
     private PlayerInputActions playerInputAcions;
@@ -35,7 +36,9 @@ public class GameInput : MonoBehaviour
         // Load saved bindings from PlayerPrefs before enabling the actions
         if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDING_KEY))
         {
-            playerInputAcions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDING_KEY));
+            playerInputAcions.LoadBindingOverridesFromJson(
+                PlayerPrefs.GetString(PLAYER_PREFS_BINDING_KEY)
+            );
         }
         else
         {
@@ -47,8 +50,6 @@ public class GameInput : MonoBehaviour
         playerInputAcions.Player.Interact.performed += Interact_performed;
         playerInputAcions.Player.InteractAlternative.performed += InteractAlternate_performed;
         playerInputAcions.Player.Pause.performed += Pause_performed;
-
-
     }
 
     private void OnDestroy()
@@ -187,18 +188,24 @@ public class GameInput : MonoBehaviour
 
         if (inputAction != null && bindingIndex >= 0)
         {
-            inputAction.PerformInteractiveRebinding(bindingIndex).OnComplete(callback =>
-            {
-                callback.Dispose();
-                playerInputAcions.Player.Enable();
+            inputAction
+                .PerformInteractiveRebinding(bindingIndex)
+                .OnComplete(callback =>
+                {
+                    callback.Dispose();
+                    playerInputAcions.Player.Enable();
 
-                onActionRebound();
+                    onActionRebound();
 
-                // Save the new binding to PlayerPrefs
-                PlayerPrefs.SetString(PLAYER_PREFS_BINDING_KEY, playerInputAcions.SaveBindingOverridesAsJson());
-                PlayerPrefs.Save();
-            })
-            .Start();
+                    // Save the new binding to PlayerPrefs
+                    PlayerPrefs.SetString(
+                        PLAYER_PREFS_BINDING_KEY,
+                        playerInputAcions.SaveBindingOverridesAsJson()
+                    );
+                    PlayerPrefs.Save();
+                    OnBindingRebound?.Invoke(this, EventArgs.Empty);
+                })
+                .Start();
         }
     }
 }

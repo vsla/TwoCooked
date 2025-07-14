@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
@@ -10,14 +10,15 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeFailed;
 
     public static DeliveryManager Instance { get; private set; }
-    [SerializeField] private RecipeSOList recipeListSO;
+
+    [SerializeField]
+    private RecipeSOList recipeListSO;
     private List<RecipeSO> waitingRecipes;
 
     private float spawnRecipeTimer;
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipesMax = 4;
     private int successfulRecipesAmount = 0;
-
 
     private void Awake()
     {
@@ -35,13 +36,12 @@ public class DeliveryManager : MonoBehaviour
     {
         spawnRecipeTimer -= Time.deltaTime;
 
-        if (spawnRecipeTimer <= 0f)
+        if (GameManager.Instance.IsGamePlaying() && spawnRecipeTimer <= 0f)
         {
             spawnRecipeTimer = spawnRecipeTimerMax;
             SpawnNewRecipe();
         }
     }
-
 
     private void SpawnNewRecipe()
     {
@@ -59,7 +59,6 @@ public class DeliveryManager : MonoBehaviour
 
             OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
         }
-
     }
 
     public void DeliverRecipe(PlateKitchenObject plateKitchenObject)
@@ -68,14 +67,21 @@ public class DeliveryManager : MonoBehaviour
         {
             RecipeSO waitingRecipeSO = waitingRecipes[i];
 
-            if (waitingRecipeSO.kitchenObjectSOList.Count == plateKitchenObject.GetKitchenObjectSOList().Count)
+            if (
+                waitingRecipeSO.kitchenObjectSOList.Count
+                == plateKitchenObject.GetKitchenObjectSOList().Count
+            )
             {
                 bool plateContentMatchesRecipe = true;
                 // If the number of ingredients matches, we can check each ingredient
-                foreach (KitchenObjectSO recipeKitchenObjectSO in waitingRecipeSO.kitchenObjectSOList)
+                foreach (
+                    KitchenObjectSO recipeKitchenObjectSO in waitingRecipeSO.kitchenObjectSOList
+                )
                 {
                     bool ingredientFound = false;
-                    foreach (KitchenObjectSO plateKitchenObjectSO in plateKitchenObject.GetKitchenObjectSOList())
+                    foreach (
+                        KitchenObjectSO plateKitchenObjectSO in plateKitchenObject.GetKitchenObjectSOList()
+                    )
                     {
                         if (plateKitchenObjectSO == recipeKitchenObjectSO)
                         {
@@ -104,11 +110,9 @@ public class DeliveryManager : MonoBehaviour
             }
         }
 
-
         // If we reach here, the recipe was not successful
         OnRecipeFailed?.Invoke(this, EventArgs.Empty);
     }
-
 
     public List<RecipeSO> GetWaitingRecipesSOList()
     {
@@ -119,5 +123,4 @@ public class DeliveryManager : MonoBehaviour
     {
         return successfulRecipesAmount;
     }
-
 }

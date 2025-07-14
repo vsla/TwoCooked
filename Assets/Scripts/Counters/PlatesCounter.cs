@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class PlatesCounter : BaseCounter
 {
-
     public event EventHandler OnPlateSpawned;
     public event EventHandler OnPlateRemoved;
-    [SerializeField] private KitchenObjectSO plateKitchenObjectSO;
+
+    [SerializeField]
+    private KitchenObjectSO plateKitchenObjectSO;
+
     private float spawnPlateTimer;
     private const float spawnPlateInterval = 4f;
     private int plateSpawnedAmount = 0;
@@ -21,7 +23,7 @@ public class PlatesCounter : BaseCounter
     {
         spawnPlateTimer += Time.deltaTime;
 
-        if (spawnPlateTimer >= spawnPlateInterval)
+        if (GameManager.Instance.IsGamePlaying() && spawnPlateTimer >= spawnPlateInterval)
         {
             spawnPlateTimer = 0f;
             if (plateSpawnedAmount < plateSpawnMaxAmout)
@@ -50,7 +52,6 @@ public class PlatesCounter : BaseCounter
 
                 OnPlateRemoved?.Invoke(this, EventArgs.Empty);
             }
-
         }
         else
         {
