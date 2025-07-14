@@ -15,7 +15,7 @@ public class DeliveryManager : MonoBehaviour
     private RecipeSOList recipeListSO;
     private List<RecipeSO> waitingRecipes;
 
-    private float spawnRecipeTimer;
+    private float spawnRecipeTimer = 1f;
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipesMax = 4;
     private int successfulRecipesAmount = 0;

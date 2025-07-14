@@ -5,8 +5,12 @@ public class SoundManager : MonoBehaviour
 {
     private const string PLAYER_PREFS_SOUND_EFFECT_VOLUME_KEY = "SoundEffectVolume";
     public static SoundManager Instance { get; private set; }
-    [SerializeField] private AudioClipRefsSO audioClipRefsSO;
-    [SerializeField] private float volume = 1.0f;
+
+    [SerializeField]
+    private AudioClipRefsSO audioClipRefsSO;
+
+    [SerializeField]
+    private float volume = 1.0f;
 
     private void Awake()
     {
@@ -20,7 +24,8 @@ public class SoundManager : MonoBehaviour
         DeliveryManager.Instance.onRecipeSuccess += DeliveryManager_OnRecipeSuccess;
         DeliveryManager.Instance.OnRecipeFailed += DeliveryManager_OnRecipeFailed;
         DeliveryManager.Instance.OnRecipeSpawned += DeliveryManager_OnRecipeSpawned;
-        CuttingCounter.OnAnyCuttingCounterProgressChanged += CuttingCounter_OnAnyCuttingCounterProgressChanged;
+        CuttingCounter.OnAnyCuttingCounterProgressChanged +=
+            CuttingCounter_OnAnyCuttingCounterProgressChanged;
         Player.Instance.OnPickedSomething += Player_OnPickedSomething;
         BaseCounter.OnAnyObjectPlacedOnCounter += BaseCounter_OnAnyObjectPlacedOnCounter;
         TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyObjectTrashed;
@@ -64,14 +69,27 @@ public class SoundManager : MonoBehaviour
         PlaySoundList(audioClipRefsSO.deliveryFail, deliveryCounter.transform.position);
     }
 
-    private void PlaySoundList(AudioClip[] audioClipArray, Vector3 position, float volumeMultiplier = 1.0f)
+    private void PlaySoundList(
+        AudioClip[] audioClipArray,
+        Vector3 position,
+        float volumeMultiplier = 1.0f
+    )
     {
-        AudioSource.PlayClipAtPoint(audioClipArray[UnityEngine.Random.Range(0, audioClipArray.Length)], position, volumeMultiplier * volume);
+        AudioSource.PlayClipAtPoint(
+            audioClipArray[UnityEngine.Random.Range(0, audioClipArray.Length)],
+            position,
+            volumeMultiplier * volume
+        );
     }
 
     public void PlayFootstepSound(Vector3 position, float volume)
     {
         PlaySoundList(audioClipRefsSO.footsteeps, position, volume);
+    }
+
+    public void PlayCountdownSound(float volume)
+    {
+        PlaySoundList(audioClipRefsSO.warning, Vector3.zero, volume);
     }
 
     public void ChangeVolume(float receivingVolume)
