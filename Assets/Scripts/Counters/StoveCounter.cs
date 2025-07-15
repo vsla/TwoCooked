@@ -217,4 +217,10 @@ public class StoveCounter : BaseCounter, IHasProgress
         NotifyOnStateChanged();
         NotifyTheFryingProgressChanged(0f); // Notify listeners about the progress change
     }
+
+
+    public bool IsFried()
+    {
+        return state == State.Fried;
+    }
 }

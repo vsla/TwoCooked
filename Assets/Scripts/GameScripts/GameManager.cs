@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private float countdownToStartTimer = 3f;
     private float gamePlayingTime;
-    private float gamePlayingTimeMax = 10f;
+    private float gamePlayingTimeMax = 360f;
     private bool isGamePaused = false;
 
     private void Start()
